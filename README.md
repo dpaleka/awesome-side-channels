@@ -102,7 +102,7 @@ A curated list of research papers, repositories, and posts exploring **side-chan
   - **Information gained:** vocab; reproducing the tokenization algorithm
 
 
-- [**Privacy Side Channels in Machine Learning Systems**](https://arxiv.org/abs/2309.05610) – *Debenedetti et al.*
+- [**Privacy Side Channels in Machine Learning Systems**](https://arxiv.org/abs/2309.05610) – *Debenedetti et al., 2023*.
 
   - **Attack vector:** fixed context length leaks how many tokens are in a long prompt
   - **Required access**: large queries to the LLM API
@@ -116,7 +116,7 @@ A curated list of research papers, repositories, and posts exploring **side-chan
   - **Information gained:** whether an embedding model is a decoder-only transformer
 
 
-- [**Privacy Side Channels in Machine Learning Systems**](https://arxiv.org/abs/2309.05610) – *Debenedetti et al.*
+- [**Privacy Side Channels in Machine Learning Systems**](https://arxiv.org/abs/2309.05610) – *Debenedetti et al., 2023*.
   
   - **Attack vector:** output filter that activates on exact sensitive strings from the training data leaks those sensitive strings
   - **Required access**: query access to a model with an output filter
