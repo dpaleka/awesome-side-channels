@@ -33,6 +33,20 @@ A curated list of research papers, repositories, and posts exploring **side-chan
   - **Information gained:** complete victim prompts, reconstructed token-by-token
 
 
+- [**I Know What You Asked: Prompt Leakage via KV-Cache Sharing in Multi-Tenant LLM Serving**](https://www.ndss-symposium.org/ndss-paper/i-know-what-you-asked-prompt-leakage-via-kv-cache-sharing-in-multi-tenant-llm-serving/) – *Wu et al., NDSS 2025*.
+  
+  - **Attack vector:** Timing differences in cache-hit vs cache-miss responses when the API uses a shared KV-cache 
+  - **Required access**: attacker can issue queries to the same multi-tenant serving system as the victim, and the cache is shared between users
+  - **Information gained:** partial or complete prompts of other users
+
+
+- [**The Early Bird Catches the Leak: Unveiling Timing Side Channels in LLM Serving Systems**](https://arxiv.org/abs/2409.20002) – *Song et al., Oct 2025*.
+  
+  - **Attack vector:** Timing differences in cache-hit vs cache-miss responses when the API uses a semantic cache (note: semantic cache is exceedingly rare)
+  - **Required access**: attacker can issue queries to the same multi-tenant serving system as the victim, and the cache is shared between users
+  - **Information gained:** infer cached/processed documents via semantic cache
+
+
 #### Attacks that require eavesdropping on encrypted network traffic
 
 - [**What Was Your Prompt? A Remote Keylogging Attack on AI Assistants**](https://arxiv.org/pdf/2403.09751) – *Weiss et al., Mar 2024*. 
@@ -62,6 +76,25 @@ A curated list of research papers, repositories, and posts exploring **side-chan
   - **Attack vector:** timing patterns from speculative decoding in streaming APIs; the patterns of speculative decoding leaks information about the LLM outputs
   - **Required access**: eavesdrop on encrypted network traffic between the user and a streaming LLM API; streaming packets are aligned with speculative decoding
   - **Information gained:** statistical information about the encrypted LLM outputs
+
+
+- [**NetEcho: From Real-World Streaming Side-Channels to Full LLM Conversation Recovery**](https://arxiv.org/abs/2510.25472) – *Zhang et al., Oct 2025*.
+  
+  - **Attack vector:** packet size and timing patterns in streaming LLM apps (including scenarios with padding/obfuscation)
+  - **Required access**: passive eavesdropping on encrypted network traffic between the user and a streaming LLM application/API
+  - **Information gained:** partial reconstruction of prompts and responses sent over an encrypted network connection
+
+
+- [**Whisper Leak: a side-channel attack on Large Language Models**](https://arxiv.org/abs/2511.03675) – *McDonald & Bar Or, Nov 2025*.
+  
+  - **Attack vector:** packet size + timing patterns in streaming responses leak metadata usable for topic inference
+  - **Required access**: passive eavesdropping on encrypted network traffic between the user and a streaming LLM application/API
+  - **Information gained:** prompt/topic classification (identifying conversations matching sensitive topics)
+
+- [**Selective KV-Cache Sharing to Mitigate Timing Side-Channels in LLM Inference**](https://arxiv.org/abs/2508.08438) – *Chu et al., Aug 2025*.
+  
+  - **Defense mechanism:** selective KV-cache sharing intended to reduce cache-hit timing leakage while retaining performance benefits
+
 
 ## Breaking LLM APIs for other users
 
@@ -120,7 +153,18 @@ A curated list of research papers, repositories, and posts exploring **side-chan
   
   - **Attack vector:** output filter that activates on exact sensitive strings from the training data leaks those sensitive strings
   - **Required access**: query access to a model with an output filter
-  - **Information gained:** Training data membership; extraction of secrets that base models don't directly memorize
+  - **Information gained:** training data membership; extraction of secrets that base models don't directly memorize
+
+
+- [**"Energon": Unveiling Transformers from GPU Power and Thermal Side-Channels**](https://arxiv.org/abs/2508.01768) – *Chaudhuri et al., Aug 2025*.
+  
+  - **Attack vector:** GPU power/thermal side-channels in shared GPU settings can reveal transformer architecture
+  - **Required access**: ability to observe power/thermal signals of the GPUs running the model (co-located / shared infrastructure setting)
+  - **Information gained:** model family and architecture details
+
+
+
+
 
 ---
 
