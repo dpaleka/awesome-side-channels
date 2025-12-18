@@ -35,16 +35,16 @@ A curated list of research papers, repositories, and posts exploring **side-chan
 
 - [**I Know What You Asked: Prompt Leakage via KV-Cache Sharing in Multi-Tenant LLM Serving**](https://www.ndss-symposium.org/ndss-paper/i-know-what-you-asked-prompt-leakage-via-kv-cache-sharing-in-multi-tenant-llm-serving/) – *Wu et al., NDSS 2025*.
   
-  - **Attack vector:** KV-cache sharing in multi-tenant LLM serving can create cache-hit / timing signals that enable token-by-token reconstruction of other users' prompts (PROMPTPEEK)
-  - **Required access**: attacker can issue queries to the same multi-tenant serving system as the victim (co-tenant / concurrent-serving setting)
+  - **Attack vector:** Timing differences in cache-hit vs cache-miss responses when the API uses a shared KV-cache 
+  - **Required access**: attacker can issue queries to the same multi-tenant serving system as the victim, and the cache is shared between users
   - **Information gained:** partial or complete prompts of other users
 
 
 - [**The Early Bird Catches the Leak: Unveiling Timing Side Channels in LLM Serving Systems**](https://arxiv.org/abs/2409.20002) – *Song et al., Oct 2025*.
   
-  - **Attack vector:** timing side-channels arising from shared KV-cache + semantic cache behaviors (and related allocation/scheduling effects) in multi-user LLM serving
-  - **Required access**: query access to the serving system; attacker uses cache-hit detection + token-by-token search over shared prefixes
-  - **Information gained:** confidential system prompts and prompts from other users; can also infer cached/processed documents via semantic cache
+  - **Attack vector:** Timing differences in cache-hit vs cache-miss responses when the API uses a semantic cache (note: semantic cache is exceedingly rare)
+  - **Required access**: attacker can issue queries to the same multi-tenant serving system as the victim, and the cache is shared between users
+  - **Information gained:** infer cached/processed documents via semantic cache
 
 
 #### Attacks that require eavesdropping on encrypted network traffic
