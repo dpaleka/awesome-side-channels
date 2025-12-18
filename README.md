@@ -80,21 +80,16 @@ A curated list of research papers, repositories, and posts exploring **side-chan
 
 - [**NetEcho: From Real-World Streaming Side-Channels to Full LLM Conversation Recovery**](https://arxiv.org/abs/2510.25472) – *Zhang et al., Oct 2025*.
   
-  - **Attack vector:** packet size/timing patterns in streaming LLM apps (including scenarios with padding/obfuscation), enabling fine-grained text recovery
+  - **Attack vector:** packet size and timing patterns in streaming LLM apps (including scenarios with padding/obfuscation)
   - **Required access**: passive eavesdropping on encrypted network traffic between the user and a streaming LLM application/API
-  - **Information gained:** partial-to-substantial reconstruction of prompts and responses (conversation recovery)
+  - **Information gained:** partial reconstruction of prompts and responses sent over an encrypted network connection
 
 
 - [**Whisper Leak: a side-channel attack on Large Language Models**](https://arxiv.org/abs/2511.03675) – *McDonald & Bar Or, Nov 2025*.
   
-  - **Attack vector:** packet size + timing patterns in streaming responses leak metadata usable for topic inference even under TLS
-  - **Required access**: passive eavesdropping on encrypted network traffic between the user and a streaming LLM service
+  - **Attack vector:** packet size + timing patterns in streaming responses leak metadata usable for topic inference
+  - **Required access**: passive eavesdropping on encrypted network traffic between the user and a streaming LLM application/API
   - **Information gained:** prompt/topic classification (identifying conversations matching sensitive topics)
-
-
-- [**Whisper Leak: A novel side-channel cyberattack on remote language models**](https://www.microsoft.com/en-us/security/blog/2025/11/07/whisper-leak-a-novel-side-channel-cyberattack-on-remote-language-models/) – *Microsoft Security Blog, Nov 2025*.
-  
-  - **Defense mechanism:** mitigation discussion and ecosystem/provider response context for streaming metadata leakage
 
 
 ## Breaking LLM APIs for other users
