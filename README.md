@@ -78,6 +78,20 @@ A curated list of research papers, repositories, and posts exploring **side-chan
   - **Information gained:** statistical information about the encrypted LLM outputs
 
 
+- [**Remote Timing Attacks on Efficient Language Model Inference**](https://arxiv.org/abs/2410.17175) – *Carlini & Nasr, Oct 2024*.
+
+  - **Attack vector:** efficient inference techniques (speculative sampling, parallel decoding, FlashAttention variants, etc.) introduce data-dependent response times; the end-to-end response latency alone leaks content
+  - **Required access**: eavesdrop on encrypted network traffic between the user and a remote LLM API; an active variant crafts prompts to amplify the signal
+  - **Information gained:** conversation topic (90%+ precision on open source; distinguishing specific messages / user language on production ChatGPT and Claude); PII (phone numbers, credit card numbers) via active boosting on open-source deployments
+
+
+- [**When Speculation Spills Secrets: Side Channels via Speculative Decoding in LLMs**](https://arxiv.org/abs/2411.01076) – *Wei et al., Nov 2024 (v4 Feb 2026)*.
+
+  - **Attack vector:** input-dependent patterns of correct vs. incorrect speculations change the number of tokens emitted per iteration, which is directly observable in packet sizes (even independent of timing)
+  - **Required access**: eavesdrop on encrypted network traffic between the user and an LLM API using speculative decoding (REST, LADE, BiLD, EAGLE tested); or same-system measurement of per-iteration token counts
+  - **Information gained:** query fingerprinting (REST 100%, BiLD 95%, LADE 92%, EAGLE 78% at temp 0.3 across vLLM); leakage of confidential draft-side datastore contents in REST at >25 tokens/sec
+
+
 - [**NetEcho: From Real-World Streaming Side-Channels to Full LLM Conversation Recovery**](https://arxiv.org/abs/2510.25472) – *Zhang et al., Oct 2025*.
   
   - **Attack vector:** packet size and timing patterns in streaming LLM apps (including scenarios with padding/obfuscation)
@@ -93,7 +107,12 @@ A curated list of research papers, repositories, and posts exploring **side-chan
 
 - [**Selective KV-Cache Sharing to Mitigate Timing Side-Channels in LLM Inference**](https://arxiv.org/abs/2508.08438) – *Chu et al., Aug 2025*.
   
-  - **Defense mechanism:** selective KV-cache sharing intended to reduce cache-hit timing leakage while retaining performance benefits
+  - **Defense mechanism:** selective KV-cache sharing (SafeKV) — private caches for prefixes classified as sensitive, shared caches for everything else; mitigates 94–97% of timing attacks while keeping most of the reuse benefit
+
+
+- [**CacheSolidarity: Preventing Prefix Caching Side Channels in Multi-tenant LLM Serving Systems**](https://arxiv.org/abs/2603.10726) – *Pennas et al., Mar 2026*.
+
+  - **Defense mechanism:** monitor prefix reuse across users and isolate only the prefixes that are shared across distinct tenants (instead of isolating whole users), keeping benign cross-user reuse; an Activator toggles the defense when the timing channel is actually distinguishable given model size, prefix length, and system load
 
 
 ## Breaking LLM APIs for other users
@@ -103,6 +122,13 @@ A curated list of research papers, repositories, and posts exploring **side-chan
   - **Attack vector:** if a MoE architecture computes something over a batch of inputs from multiple users, then malicious inputs from one user can degrade the outputs of other users' queries
   - **Required access**: place many queries together with the victim's query in the same batch
   - **Information gained:** None (potential performance degradation for user victims)
+
+
+- [**Rethinking Latency Denial-of-Service: Attacking the LLM Serving Framework, Not the Model**](https://arxiv.org/abs/2602.07878) – *Wang et al., Feb 2026*.
+
+  - **Attack vector:** "Fill and Squeeze" — Fill exhausts the global KV cache to force head-of-line blocking in the scheduler's waiting queue; Squeeze forces repeated preemption. A side-channel probe (inter-token latency of benign probe requests is correlated with global KV memory pressure) lets a black-box attacker track scheduler saturation in real time
+  - **Required access**: ordinary API tenant on the same serving system as the victims (vLLM, SGLang, Orca targeted); no privileged or physical co-location needed
+  - **Information gained:** none directly — the attack degrades service for co-located users (up to 20–280× TTFT and 1.5–4× TPOT slowdown) at 30–40% lower attacker cost than prior algorithmic latency attacks
 
 
 ## Extracting information about the LLM not given by the API
@@ -161,6 +187,13 @@ A curated list of research papers, repositories, and posts exploring **side-chan
   - **Attack vector:** GPU power/thermal side-channels in shared GPU settings can reveal transformer architecture
   - **Required access**: ability to observe power/thermal signals of the GPUs running the model (co-located / shared infrastructure setting)
   - **Information gained:** model family and architecture details
+
+
+- [**Log Probability Tracking of LLM APIs**](https://arxiv.org/abs/2512.03816) – *Chauvin et al., Dec 2025*.
+
+  - **Attack vector:** even with non-deterministic sampling, the average logprob of a fixed token under a fixed prompt is a sensitive fingerprint of the underlying weights; a simple statistical test on single-token outputs detects model changes
+  - **Required access**: API that returns logprobs (even one top token on a single-token prompt suffices; ≈23% of OpenRouter endpoints qualify)
+  - **Information gained:** detection of silent model swaps / updates, down to a single step of fine-tuning; ~1000× cheaper than MMLU-style audits and more sensitive than output-probability matching
 
 
 
