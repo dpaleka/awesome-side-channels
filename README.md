@@ -149,6 +149,28 @@ A curated list of research papers, repositories, and posts exploring **side-chan
   - **Information gained:** whether an embedding model is a decoder-only transformer
 
 
+- [**FeatureBleed: Inferring Private Enriched Attributes From Sparsity-Optimized AI Accelerators**](https://arxiv.org/abs/2602.18304) – *Asher et al., IEEE CAL 2026*.
+
+  - **Attack vector:** zero-skipping makes accelerator execution time depend on activation sparsity induced by private features retrieved during inference; evaluated on DNN, CNN, and hybrid CNN-MLP services
+  - **Required access**: remote queries to a label-only inference API, timing of the attacker's own responses, and an auxiliary dataset for profiling; no co-location, shared hardware, model weights, or confidence scores
+  - **Information gained:** sensitive attributes fetched internally from a backend or feature store and never supplied by the caller, including clinical and socioeconomic attributes
+
+
+- [**THOR: A Non-Speculative Value Dependent Timing Side Channel Attack Exploiting Intel AMX**](https://arxiv.org/abs/2502.17658) – *Dizani et al., IEEE CAL 2025*.
+
+  - **Attack vector:** operand-dependent Intel AMX execution latency leaks neural-network weight sparsity through inference timing
+  - **Required access**: an unprivileged process on the same server issuing chosen inputs to the victim's inference API and measuring responses; separate address spaces and CPU cores are allowed, with no shared-cache access or confidence scores
+  - **Information gained:** zero/nonzero weight patterns; the single-layer neural-network proof of concept recovers sparsity for 64 input elements in 50 minutes
+
+
+- [**GATEBLEED: Exploiting On-Core Accelerator Power Gating for High Performance & Stealthy Attacks on AI**](https://arxiv.org/abs/2507.17033) – *Kalyanapu et al., MICRO 2025*.
+
+  - **Attack vector:** data-dependent use of Intel AMX units exposes repeatable timing delays from staged accelerator power gating, including in transformer and mixture-of-experts inference
+  - **Required access**: ability to query an AI service using Intel AMX and measure response timing; the paper demonstrates both local and remote timing inference
+  - **Information gained:** training-data membership (81% accuracy, 0.89 precision) and mixture-of-experts routing decisions (100% expert-choice accuracy)
+  - **Related accelerator-channel work:** [Exploiting Intel AMX Power Gating (NetLoki)](https://doi.org/10.1109/LCA.2025.3555183) – *Kalyanapu et al., IEEE CAL 2025*. Demonstrates remote speculative memory disclosure through AMX power-gating timing, assuming network-exposed leak and transmission gadgets; it provides background on the accelerator channel rather than a model-inference attack.
+
+
 - [**Privacy Side Channels in Machine Learning Systems**](https://arxiv.org/abs/2309.05610) – *Debenedetti et al., 2023*.
   
   - **Attack vector:** output filter that activates on exact sensitive strings from the training data leaks those sensitive strings
